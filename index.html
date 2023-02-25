@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/ae134bc5f2.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/ae134bc5f2.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./wea.css">
+</head>
+
+<body class="p-5">
+   
+
+
+        <div class="card mt-5 bg-info" id="card1" style="width: 18rem; left:500px;">
+            <div class="card-body">
+              <h4 class="card-title">Weather Today
+                <i class="fa-solid fa-cloud-sun-rain"></i>
+              </h4>
+
+        <input type="text" id="inp" placeholder="Search Weather" class=" form-control mt-2">
+        <button class="btn btn-outline-primary mt-3  mb-3" type="button" onclick="weatherData()">Search</button>
+    </div> 
+</div>
+</div>
+<div class="card2">
+    <div class="card mt-4 p-5 text-white bg-info" id="result" style="width: 18rem;
+    left: 500px;">
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+        </div>
+      </div>
+    </div>
+</body>
+<script>
+ function weatherData() {
+        weather = inp.value
+   
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${weather}&appid=b41ec3be35c7dac8aabbc21ba253137a`).then(data => data.json()).then(data => displayData(data))
+
+    }
+    function displayData(cityData){
+
+cityName=cityData.name
+humid=cityData.main.humidity
+temperature=((cityData.main.temp)-273.15).toFixed()
+windspeed=cityData.wind.speed
+condition=cityData.weather[0].description
+var today=new Date();
+var day=today.getDay()
+var dayList=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+// tempMin=((cityData.main.temp_min)-273.15).toFixed()
+// tempMax=((cityData.main.temp_max)-273.15).toFixed()
+// feels_like=((cityData.main.feels_like)-273.15).toFixed()
+
+result.innerHTML=`
+<h1 class="temp">${dayList[day]} </h1>
+<h3 class="city"> Weather in ${cityName}<i class="fa-solid fa-cloud"></i></h3>
+<h3 >${condition}</h3>
+<h1 class="temp">${temperature}°C <i class="fa-solid fa-temperature-three-quarters"></i> </h1>
+
+<h4 class="humid"> Humidity<i class="fa-solid fa-arrow-right"></i> ${humid}% </h4>
+<h4 class="wind">Wind speed<i class="fa-solid fa-arrow-right"></i>${windspeed}km/h <i class="fa-solid fa-wind"></i></h4>
+
+
+`
+
+}
+</script>
+</html>
+
